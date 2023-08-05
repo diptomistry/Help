@@ -16,6 +16,15 @@ WHERE hire_date >= '2023-01-01';
 UPDATE employees
 SET first_name = 'Jane'--SET column1 = value1, column2 = value2, ...
 WHERE id = 1;
+--Rename Tables:
+ALTER TABLE old_table_name RENAME TO new_table_name;
+                  --or--
+RENAME TABLE old_table_name TO new_table_name;
+
+--Rename Table Columns:
+ALTER TABLE table_name RENAME COLUMN old_column_name TO new_column_name;
+
+
 
 
 
