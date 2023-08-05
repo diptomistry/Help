@@ -4,7 +4,8 @@ ALTER TABLE table_name ADD column_name datatype;
 --modify column:
 ALTER TABLE table_name MODIFY column_name new_datatype;
 --drop a column:
-ALTER TABLE table_name DROP column_name;
+ALTER TABLE table_name 
+DROP column_name;
 --modify an existing view:
 ALTER VIEW view_name AS new_query;
 --alter index
@@ -14,5 +15,14 @@ ALTER DATABASE database_name modification;
    -->example:
       -->set mode:
          alter database databaseName read only=1;
+-->modify:
+alter table employees
+modify column email varchar(updatedValue);--increasing size
+-->to change column position:
+alter table employees
+modify column email varchar(currentValue)
+after columnName ;--to move to first
+                     first
+
 
 
