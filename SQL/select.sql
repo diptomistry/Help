@@ -1,8 +1,8 @@
-SELECT * FROM employees;--selects all columns
+SELECT * FROM employees;--selects all columns(* means all)
 --to select specific column:
 SELECT first_name, last_name
 FROM employees
-WHERE department = 'Sales';
+WHERE department = 'Sales';--for null values ,we have to use 'is' instead of '='( department is null)
 --select with multiple conditions:
 SELECT product_name, price
 FROM products
