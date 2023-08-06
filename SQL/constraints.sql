@@ -65,6 +65,22 @@ INSERT INTO transactions (transaction_id, amount)
 VALUES (2, 2.89);
 SELECT * FROM transactions;
 
+                         #PrimaryKey#
+--unique+not null
+--Ensures that a column (or a set of columns) uniquely identifies each row in a table.
+--Prevents duplicate and NULL values in the specified column(s).
+--Example:
+CREATE TABLE students (
+  student_id INT PRIMARY KEY,
+  first_name VARCHAR(50),
+  last_name VARCHAR(50)
+);
+--for existing table:
+ALTER TABLE students
+ADD CONSTRAINTS PRIMARY KEY(student_id);
+--we cant have multiple primary keys for a table ,for example now we cant set any other column except student_id as primary key
+
+
 
 
 
