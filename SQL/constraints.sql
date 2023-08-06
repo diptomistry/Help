@@ -90,6 +90,20 @@ CREATE TABLE transactions (
 ALTER TABLE transactions 
 AUTO_INCREMENT = 1000;
 
+                                    #ForeignKey#
+--if the same primary key is used in a different table ,it will be called a foreign key.
+--Establishes a relationship between two tables, where the values in a column of one table match the values in another table's primary key column.
+--Ensures referential integrity, maintaining consistency between related tables.
+--Example:
+CREATE TABLE enrollments (
+  enrollment_id INT PRIMARY KEY,
+  student_id INT,
+  course_id INT,
+  FOREIGN KEY (student_id) REFERENCES students(student_id),
+  FOREIGN KEY (course_id) REFERENCES courses(course_id)
+);
+
+
 
 
 
