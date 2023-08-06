@@ -34,4 +34,38 @@ ALTER TABLE orders
 DROP CHECK chk_total_amount;
 
 
+                            #DEFAULT#
+--Sets a default value for a column if no value is provided during insertion.
+--Ensures that a column always has a value even if not explicitly provided.
+--Example:
+CREATE TABLE products (
+  product_id INT PRIMARY KEY,
+  product_name VARCHAR(100),
+  price DECIMAL(10, 2) DEFAULT 0.00
+);
+--For existing table:
+ALTER TABLE products
+ALTER price SET DEFAULT 0;
+--insertion:
+INSERT INTO products (product_id, product_name)
+VALUES (1, 'Widget A');
+--example 2
+CREATE TABLE transactions(
+        transaction_id INT,
+     amount DECIMAL(5, 2),
+    transaction_date DATETIME DEFAULT NOW()-- the NOW() function is used to retrieve the current date and time from the server. It returns the current date and time in the format 'YYYY-MM-DD HH:MM:SS'. 
+);
+SELECT * FROM transactions;
+
+INSERT INTO transactions (transaction_id, amount)
+VALUES (1, 4.99);
+SELECT * FROM transactions;
+
+INSERT INTO transactions (transaction_id, amount)
+VALUES (2, 2.89);
+SELECT * FROM transactions;
+
+
+
+
 
