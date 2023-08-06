@@ -95,6 +95,23 @@ AUTO_INCREMENT = 1000;
 --Establishes a relationship between two tables, where the values in a column of one table match the values in another table's primary key column.
 --Ensures referential integrity, maintaining consistency between related tables.
 --Example:
+CREATE TABLE customers (
+    customer_id INT PRIMARY KEY AUTO_INCREMENT,
+     first_name VARCHAR(50),
+     last_name VARCHAR(50)
+);
+INSERT INTO customers (first_name, last_name)
+VALUES  ("Fred", "Fish"),
+                ("Larry", "Lobster"),
+                ("Bubble", "Bass");
+
+CREATE TABLE transactions (
+    transaction_id INT PRIMARY KEY AUTO_INCREMENT,
+    amount DECIMAL(5, 2),
+    customer_id INT,
+    FOREIGN KEY (customer_id) REFERENCES customers(customer_id)
+);
+--another example
 CREATE TABLE enrollments (
   enrollment_id INT PRIMARY KEY,
   student_id INT,
@@ -102,6 +119,14 @@ CREATE TABLE enrollments (
   FOREIGN KEY (student_id) REFERENCES students(student_id),
   FOREIGN KEY (course_id) REFERENCES courses(course_id)
 );
+--to drop foreign key:
+ALTER TABLE transactions
+DROP FOREIGN KEY foreignKeyName;--name will be found in the schemas->database->table->foreign key
+--to set foreign key name manually(for existing table with foreign key):
+ALTER TABLE transactions
+ADD CONSTRAINTS keyName
+FOREIGN KEY (course_id) REFERENCES courses(course_id);
+
 
 
 
