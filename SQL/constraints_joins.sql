@@ -126,6 +126,55 @@ DROP FOREIGN KEY foreignKeyName;--name will be found in the schemas->database->t
 ALTER TABLE transactions
 ADD CONSTRAINTS keyName
 FOREIGN KEY (course_id) REFERENCES courses(course_id);
+-----------------------joins--------------------------
+                      #INNER_JOIN#
+transactionTable:
++------------------+--------+--------------+
+| transaction_id   | amount |customer_id(f)|
++------------------+--------+--------------+
+|  1000            |  4.34  |      3       |
++------------------+--------+--------------+
+|  1001            | 3.43   |       2      |
++------------------+--------+--------------+
+|  1002            |  3.56  |       3      |
++------------------+--------+--------------+
+|  1003            | 2.34   |        1     |
++------------------+--------+--------------+
+|  1004            | 5.43   |     null     |
++------------------+--------+--------------+
+
+customerTable:
++------------------+--------+-------------+
+| customer_id(pk)  | F_name |  L_name     |
++------------------+--------+-------------+
+|  1               | sdfafd |     fgdfg   |
++------------------+--------+-------------+
+|  2               | asdfdf |       sdfg  |
++------------------+--------+-------------+
+|  3               |  dfg   |     sdfgd   |
++------------------+--------+-------------+
+|  4               | dfgdfg |      dfgdf  |
++------------------+--------+-------------+
+
+
+
+
+-- INNER JOIN selects records that have a matching key in both tables.
+SELECT *
+FROM transactions INNER JOIN customers
+ON transactions.customer_id = customers.customer_id;
+
+-- LEFT JOIN returns all records from the left table 
+-- and the matching records from the right table
+SELECT *
+FROM transactions LEFT JOIN customers
+ON transactions.customer_id = customers.customer_id;
+
+-- RIGHT JOIN returns all records from the right table 
+-- and the matching records from the left table
+SELECT *
+FROM transactions RIGHT JOIN customers
+ON transactions.customer_id = customers.customer_id;
 
 
 
