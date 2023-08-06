@@ -80,6 +80,15 @@ ALTER TABLE students
 ADD CONSTRAINTS PRIMARY KEY(student_id);
 --we cant have multiple primary keys for a table ,for example now we cant set any other column except student_id as primary key
 
+--FETURES:
+  --AUTOINCREMENT:
+CREATE TABLE transactions (
+    transaction_id INT PRIMARY KEY AUTO_INCREMENT,--id number will start from 1
+    amount DECIMAL(5, 2)
+);
+ --to start with a particular number:
+ALTER TABLE transactions 
+AUTO_INCREMENT = 1000;
 
 
 
