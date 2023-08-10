@@ -1,2 +1,2 @@
-android->app->build.gradle:android package name(applicationId)
+android->app->build.gradle:android package name(applicationId)//minSdkVersion 19
 android->gradle->build.gradle->execute gradle task:signingReport
