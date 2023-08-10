@@ -1,0 +1,2 @@
+android->app->build.gradle:android package name(applicationId)
+android->gradle->build.gradle->execute gradle task:signingReport
