@@ -1,0 +1,3 @@
+change mode:https:
+console.cloud.google.com/apis/api/firestore.googleapis.com/metrics?project=petbook-8daf6&cloudshell=true
+gcloud alpha firestore databases update --type=firestore-native
