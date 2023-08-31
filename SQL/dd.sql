@@ -29,9 +29,20 @@ WHERE StudentID = '1';
 -- II) Find maximum and average obtained marks for a course on a particular exam date
 SELECT Course, ExamDate, MAX(IncourseMarks + FinalMarks) AS MaxObtainedMarks, AVG(IncourseMarks + FinalMarks) AS AvgObtainedMarks
 FROM tbl_ExamMarks
-WHERE Course = 'C1' AND ExamDate = '2023-08-01';
+WHERE ExamDate = '2023-08-01'
+GROUP BY Course, ExamDate;
+
 
 -- III) Find the list of students who attempted a course only once
+SELECT StudentID
+FROM (
+    SELECT StudentID, Course, COUNT(*) AS AttemptCount
+    FROM tbl_ExamMarks
+    GROUP BY StudentID, Course
+) AS AttemptsPerCourse
+GROUP BY StudentID
+HAVING MAX(AttemptCount) = 1;
+--alternative thinking:
 SELECT StudentID
 FROM tbl_ExamMarks
 GROUP BY StudentID
