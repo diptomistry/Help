@@ -173,4 +173,28 @@ VALUES
     (2, 2, 1, 'BAG456', 18.0, 'Checked'),
     (3, 3, 2, 'BAG789', 12.5, 'Checked');
 
+                            --queries:
+--Retrieve the details of all flights, including their airline and origin/destination airports.
+--using join:
+SELECT Flight.FlightID, Airline.AirlineName, Flight.FlightNumber, DepartureAirport, DestinationAirport, DepartureTime, ArrivalTime
+FROM Flight
+JOIN Airline ON Flight.AirlineID = Airline.AirlineID;
+-- using nested:
+SELECT
+    Flight.FlightID,
+    (SELECT AirlineName FROM Airline WHERE AirlineID = Flight.AirlineID) AS Airline,
+    Flight.FlightNumber,
+    Flight.DepartureAirport AS OriginAirport,
+    Flight.DestinationAirport AS DestinationAirport,
+    Flight.DepartureTime,
+    Flight.ArrivalTime
+FROM Flight;
+--Retrieve the details of passengers and their associated flights.
+SELECT Passenger.PassengerID, FirstName, LastName, Flight.FlightNumber, DepartureAirport, DestinationAirport
+FROM Passenger
+JOIN Ticket ON Passenger.PassengerID = Ticket.PassengerID
+JOIN Flight ON Ticket.FlightID = Flight.FlightID;
+
+
+
 
