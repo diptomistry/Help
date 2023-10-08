@@ -1,0 +1,74 @@
+Airport Table:
+
+AirportID (Primary Key)
+AirportName
+Location
+IATACode (International Air Transport Association code)
+ICAOCode (International Civil Aviation Organization code)
+RunwayCount
+TerminalCount
+GateCount
+Runway Table:
+
+RunwayID (Primary Key)
+AirportID (Foreign Key)
+RunwayNumber
+Length
+SurfaceType
+Status (Available/Unavailable)
+Terminal Table:
+
+TerminalID (Primary Key)
+AirportID (Foreign Key)
+TerminalName
+BoardingBridgeCount
+Gate Table:
+
+GateID (Primary Key)
+TerminalID (Foreign Key)
+GateNumber (Alphanumeric)
+Status (Available/Unavailable)
+Airline Table:
+
+AirlineID (Primary Key)
+AirlineName
+IATACode
+Flight Table:
+
+FlightID (Primary Key)
+AirlineID (Foreign Key)
+FlightNumber
+DepartureAirport (IATACode)
+DestinationAirport (IATACode)
+DepartureTime
+ArrivalTime
+Passenger Table:
+
+PassengerID (Primary Key)
+FirstName
+LastName
+PassportNumber
+Nationality
+ContactInfo (e.g., email, phone)
+Ticket Table:
+
+TicketID (Primary Key)
+PassengerID (Foreign Key)
+FlightID (Foreign Key)
+SeatNumber
+TicketStatus (e.g., Booked, Checked-In)
+BoardingPass Table:
+
+BoardingPassID (Primary Key)
+TicketID (Foreign Key)
+GateID (Foreign Key)
+BoardingTime
+SeatNumber
+Baggage Table:
+
+BaggageID (Primary Key)
+PassengerID (Foreign Key)
+FlightID (Foreign Key)
+BaggageTagNumber
+Weight
+Status (e.g., Checked, Loaded)
