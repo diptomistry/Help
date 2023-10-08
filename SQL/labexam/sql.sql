@@ -1,77 +1,103 @@
--- Create Passenger Information table
-CREATE TABLE Passengers (
-    PassengerID INT PRIMARY KEY,
-    FirstName VARCHAR(255),
-    LastName VARCHAR(255),
-    PassportNumber VARCHAR(20),
-    ContactInformation VARCHAR(255)
+-- Create Airport Table
+CREATE TABLE Airport (
+    AirportID INT PRIMARY KEY,
+    AirportName VARCHAR(255),
+    Location VARCHAR(255),
+    IATACode VARCHAR(3),
+    ICAOCode VARCHAR(4),
+    RunwayCount INT,
+    TerminalCount INT,
+    GateCount INT
 );
 
--- Create Airlines table
-CREATE TABLE Airlines (
+-- Create Runway Table
+CREATE TABLE Runway (
+    RunwayID INT PRIMARY KEY,
+    AirportID INT,
+    RunwayNumber VARCHAR(10),
+    Length DECIMAL(10, 2),
+    SurfaceType VARCHAR(50),
+    Status VARCHAR(20),
+    FOREIGN KEY (AirportID) REFERENCES Airport (AirportID)
+);
+
+-- Create Terminal Table
+CREATE TABLE Terminal (
+    TerminalID INT PRIMARY KEY,
+    AirportID INT,
+    TerminalName VARCHAR(255),
+    BoardingBridgeCount INT,
+    FOREIGN KEY (AirportID) REFERENCES Airport (AirportID)
+);
+
+-- Create Gate Table
+CREATE TABLE Gate (
+    GateID INT PRIMARY KEY,
+    TerminalID INT,
+    GateNumber VARCHAR(10),
+    Status VARCHAR(20),
+    FOREIGN KEY (TerminalID) REFERENCES Terminal (TerminalID)
+);
+
+-- Create Airline Table
+CREATE TABLE Airline (
     AirlineID INT PRIMARY KEY,
     AirlineName VARCHAR(255),
-    IATACode VARCHAR(2),
-    ICAOCode VARCHAR(3),
-    -- Add other airline-specific fields here
+    IATACode VARCHAR(3)
 );
 
--- Create Flights table
-CREATE TABLE Flights (
+-- Create Flight Table
+CREATE TABLE Flight (
     FlightID INT PRIMARY KEY,
     AirlineID INT,
     FlightNumber VARCHAR(10),
-    OriginAirportCode VARCHAR(3),
-    DestinationAirportCode VARCHAR(3),
-    DepartureDateTime DATETIME,
-    ArrivalDateTime DATETIME,
-    FOREIGN KEY (AirlineID) REFERENCES Airlines(AirlineID)
+    DepartureAirport VARCHAR(3),
+    DestinationAirport VARCHAR(3),
+    DepartureTime DATETIME,
+    ArrivalTime DATETIME,
+    FOREIGN KEY (AirlineID) REFERENCES Airline (AirlineID)
 );
 
--- Create Boarding Passes table
-CREATE TABLE BoardingPasses (
-    BoardingPassID INT PRIMARY KEY,
+-- Create Passenger Table
+CREATE TABLE Passenger (
+    PassengerID INT PRIMARY KEY,
+    FirstName VARCHAR(50),
+    LastName VARCHAR(50),
+    PassportNumber VARCHAR(20),
+    Nationality VARCHAR(50),
+    ContactInfo VARCHAR(255)
+);
+
+-- Create Ticket Table
+CREATE TABLE Ticket (
+    TicketID INT PRIMARY KEY,
     PassengerID INT,
     FlightID INT,
-    GateNumber VARCHAR(10),
     SeatNumber VARCHAR(10),
-    BoardingDateTime DATETIME,
-    FOREIGN KEY (PassengerID) REFERENCES Passengers(PassengerID),
-    FOREIGN KEY (FlightID) REFERENCES Flights(FlightID)
+    TicketStatus VARCHAR(20),
+    FOREIGN KEY (PassengerID) REFERENCES Passenger (PassengerID),
+    FOREIGN KEY (FlightID) REFERENCES Flight (FlightID)
 );
 
--- Create Baggage Tags table
-CREATE TABLE BaggageTags (
-    BaggageTagID INT PRIMARY KEY,
-    BoardingPassID INT,
-    TagNumber VARCHAR(20),
-    Weight DECIMAL(5, 2),
-    DestinationAirportCode VARCHAR(3),
-    FOREIGN KEY (BoardingPassID) REFERENCES BoardingPasses(BoardingPassID)
+-- Create BoardingPass Table
+CREATE TABLE BoardingPass (
+    BoardingPassID INT PRIMARY KEY,
+    TicketID INT,
+    GateID INT,
+    BoardingTime DATETIME,
+    SeatNumber VARCHAR(10),
+    FOREIGN KEY (TicketID) REFERENCES Ticket (TicketID),
+    FOREIGN KEY (GateID) REFERENCES Gate (GateID)
 );
 
--- Create Airport Facilities table
-CREATE TABLE AirportFacilities (
-    FacilityID INT PRIMARY KEY,
-    FacilityName VARCHAR(255),
-    Description TEXT
+-- Create Baggage Table
+CREATE TABLE Baggage (
+    BaggageID INT PRIMARY KEY,
+    PassengerID INT,
+    FlightID INT,
+    BaggageTagNumber VARCHAR(20),
+    Weight DECIMAL(10, 2),
+    Status VARCHAR(20),
+    FOREIGN KEY (PassengerID) REFERENCES Passenger (PassengerID),
+    FOREIGN KEY (FlightID) REFERENCES Flight (FlightID)
 );
-
--- Create Gates table
-CREATE TABLE Gates (
-    GateID INT PRIMARY KEY,
-    FacilityID INT,
-    GateNumber VARCHAR(10),
-    -- Add other gate-specific fields here
-    FOREIGN KEY (FacilityID) REFERENCES AirportFacilities(FacilityID)
-);
-
--- Create Runways table
-CREATE TABLE Runways (
-    RunwayID INT PRIMARY KEY,
-    FacilityID INT,
-    RunwayNumber VARCHAR(10),
-    -- Add other runway-specific fields here
-    FOREIGN KEY (FacilityID) REFERENCES AirportFacilities(FacilityID)
-);
-
