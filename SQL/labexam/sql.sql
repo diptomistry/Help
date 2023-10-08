@@ -101,3 +101,76 @@ CREATE TABLE Baggage (
     FOREIGN KEY (PassengerID) REFERENCES Passenger (PassengerID),
     FOREIGN KEY (FlightID) REFERENCES Flight (FlightID)
 );
+
+---insert
+Insert data into the Airport table
+INSERT INTO Airport (AirportID, AirportName, Location, IATACode, ICAOCode, RunwayCount, TerminalCount, GateCount)
+VALUES
+    (1, 'John F. Kennedy International Airport', 'New York, USA', 'JFK', 'KJFK', 4, 6, 20),
+    (2, 'Los Angeles International Airport', 'Los Angeles, USA', 'LAX', 'KLAX', 6, 7, 25),
+    (3, 'Heathrow Airport', 'London, UK', 'LHR', 'EGLL', 5, 4, 15);
+
+-- Insert data into the Runway table
+INSERT INTO Runway (RunwayID, AirportID, RunwayNumber, Length, SurfaceType, Status)
+VALUES
+    (1, 1, '08L/26R', 12000.00, 'Asphalt', 'Active'),
+    (2, 1, '04L/22R', 11000.00, 'Concrete', 'Active'),
+    (3, 2, '25L/07R', 13000.00, 'Asphalt', 'Active');
+
+-- Insert data into the Terminal table
+INSERT INTO Terminal (TerminalID, AirportID, TerminalName, BoardingBridgeCount)
+VALUES
+    (1, 1, 'Terminal 1', 8),
+    (2, 1, 'Terminal 2', 10),
+    (3, 2, 'Terminal A', 12);
+
+-- Insert data into the Gate table
+INSERT INTO Gate (GateID, TerminalID, GateNumber, Status)
+VALUES
+    (1, 1, 'A1', 'Open'),
+    (2, 1, 'A2', 'Closed'),
+    (3, 2, 'B3', 'Open');
+
+-- Insert data into the Airline table
+INSERT INTO Airline (AirlineID, AirlineName, IATACode)
+VALUES
+    (1, 'American Airlines', 'AA'),
+    (2, 'Delta Air Lines', 'DL'),
+    (3, 'British Airways', 'BA');
+
+-- Insert data into the Flight table
+INSERT INTO Flight (FlightID, AirlineID, FlightNumber, DepartureAirport, DestinationAirport, DepartureTime, ArrivalTime)
+VALUES
+    (1, 1, 'AA123', 'JFK', 'LAX', '2023-10-08 08:00:00', '2023-10-08 11:00:00'),
+    (2, 2, 'DL456', 'JFK', 'LAX', '2023-10-08 09:30:00', '2023-10-08 12:30:00'),
+    (3, 3, 'BA789', 'LHR', 'JFK', '2023-10-08 14:00:00', '2023-10-08 18:00:00');
+
+-- Insert data into the Passenger table
+INSERT INTO Passenger (PassengerID, FirstName, LastName, PassportNumber, Nationality, ContactInfo)
+VALUES
+    (1, 'John', 'Doe', 'ABC12345', 'USA', 'john.doe@example.com'),
+    (2, 'Jane', 'Smith', 'XYZ98765', 'USA', 'jane.smith@example.com'),
+    (3, 'David', 'Johnson', 'PQR54321', 'UK', 'david.johnson@example.com');
+
+-- Insert data into the Ticket table
+INSERT INTO Ticket (TicketID, PassengerID, FlightID, SeatNumber, TicketStatus)
+VALUES
+    (1, 1, 1, '1A', 'Confirmed'),
+    (2, 2, 1, '1B', 'Confirmed'),
+    (3, 3, 2, '2A', 'Confirmed');
+
+-- Insert data into the BoardingPass table
+INSERT INTO BoardingPass (BoardingPassID, TicketID, GateID, BoardingTime, SeatNumber)
+VALUES
+    (1, 1, 1, '2023-10-08 07:30:00', '1A'),
+    (2, 2, 1, '2023-10-08 07:45:00', '1B'),
+    (3, 3, 3, '2023-10-08 09:00:00', '2A');
+
+-- Insert data into the Baggage table
+INSERT INTO Baggage (BaggageID, PassengerID, FlightID, BaggageTagNumber, Weight, Status)
+VALUES
+    (1, 1, 1, 'BAG123', 15.5, 'Checked'),
+    (2, 2, 1, 'BAG456', 18.0, 'Checked'),
+    (3, 3, 2, 'BAG789', 12.5, 'Checked');
+
+
