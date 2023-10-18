@@ -126,6 +126,8 @@ DROP FOREIGN KEY foreignKeyName;--name will be found in the schemas->database->t
 ALTER TABLE transactions
 ADD CONSTRAINTS keyName
 FOREIGN KEY (course_id) REFERENCES courses(course_id);
+
+https://chat.openai.com/c/ce26f760-2c23-4494-8500-a527a332076a
 -----------------------joins--------------------------
                       #INNER_JOIN#
 --transactionTable:
