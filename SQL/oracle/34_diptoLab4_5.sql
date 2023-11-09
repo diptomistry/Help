@@ -91,6 +91,7 @@ INSERT INTO company (name, capital) VALUES ('Health Care Pharma', 450000.00);
 INSERT INTO company (name, capital) VALUES ('Travel Express', 600000.75);
 INSERT INTO company (name, capital) VALUES ('Energy Power Ltd.', 1200000.25);
 INSERT INTO company (name, capital) VALUES ('Educate Plus', 350000.00);
+
 CREATE TABLE investment (
     id NUMBER PRIMARY KEY,
     company_name VARCHAR2(255),
