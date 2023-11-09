@@ -122,4 +122,5 @@ INSERT INTO investment (company_id, company_name, person_id, comShare)
 VALUES (10, 'Oracle', 9, 28.90);
 
 
+                                              --QUERIES--
 
