@@ -1,0 +1,10 @@
+CREATE TABLE person (
+    id NUMBER PRIMARY KEY,
+    name VARCHAR2(255) NOT NULL,
+    dob DATE,
+    gender VARCHAR2(10) CHECK (gender IN ('Male', 'Female', 'Other')),
+    father_id NUMBER,
+    mother_id NUMBER,
+    CONSTRAINT fk_father FOREIGN KEY (father_id) REFERENCES person(id),
+    CONSTRAINT fk_mother FOREIGN KEY (mother_id) REFERENCES person(id)
+);
