@@ -124,13 +124,14 @@ VALUES (10, 'Oracle', 9, 28.90);
 
                                               --QUERIES--
 --1)Find the number of investors of the companies.
-CREATE OR REPLACE PROCEDURE GetCompanyInvestorCount AS
-BEGIN
-    FOR company_rec IN (SELECT c.name AS company_name, COUNT(i.person_id) AS investor_count
+CREATE OR REPLACE PROCEDURE GetCompanyInvestorCount AS--CREATE: If the stored procedure does not exist
+                                                      --OR REPLACE: If the stored procedure already exists
+BEGIN-- Start a FOR loop to iterate over the result set of the SELECT statement
+    FOR company_rec IN (SELECT c.name AS company_name, COUNT(i.person_id) AS investor_count-- Select the company name and count of investors from the company and investment tables
                         FROM company c
                         LEFT JOIN investment i ON c.id = i.company_id
                         GROUP BY c.name)
-    LOOP
+    LOOP -- Output the company name and investor count for each iteration of the loop
         DBMS_OUTPUT.PUT_LINE('Company: ' || company_rec.company_name || ', Investor Count: ' || company_rec.investor_count);
     END LOOP;
 END;
@@ -146,21 +147,21 @@ Company: Google, Investor Count: 5
 --2)Find the total amount invested by a family
 CREATE OR REPLACE PROCEDURE CalculateFamilyInvestment (
     in_person_id IN NUMBER
-) AS
+) AS-- Declare a variable to store the total investment
     v_total_investment NUMBER;
-BEGIN
+BEGIN -- Select the sum of investments for the specified person and their family members
     SELECT NVL(SUM(i.comShare), 0)
     INTO v_total_investment
     FROM investment i
     JOIN person p ON i.person_id = p.id
     WHERE i.person_id = in_person_id
-       OR i.person_id IN (
+       OR i.person_id IN ( -- Select the IDs of family members (father or mother) of the specified person
            SELECT id
            FROM person
            WHERE father_id = in_person_id OR mother_id = in_person_id
        );
 
-    DBMS_OUTPUT.PUT_LINE('Total investment by the family: ' || v_total_investment);
+    DBMS_OUTPUT.PUT_LINE('Total investment by the family: ' || v_total_investment); -- Output
 END;
 /
 
@@ -170,21 +171,21 @@ Total investment by the family: 102
                               --5 more queries--
     --1)person with no father
 CREATE OR REPLACE PROCEDURE GetPersonsNoFather AS
-  CURSOR no_father_cursor IS
+  CURSOR no_father_cursor IS-- Declare a cursor named no_father_cursor
     SELECT id, name
     FROM person
     WHERE father_id IS NULL;
   
-  v_id NUMBER;
+  v_id NUMBER;--to store data retrieved from the cursor.
   v_name VARCHAR2(255);
-BEGIN
-  OPEN no_father_cursor;
-  LOOP
-    FETCH no_father_cursor INTO v_id, v_name;
-    EXIT WHEN no_father_cursor%NOTFOUND;
-    DBMS_OUTPUT.PUT_LINE('ID: ' || v_id || ', Name: ' || v_name);
+BEGIN--start
+  OPEN no_father_cursor;-- Opens the cursor for fetching.
+  LOOP--Initiates a loop to iterate over the result set obtained from the cursor.
+    FETCH no_father_cursor INTO v_id, v_name;--Fetches data from the cursor into the declared variables.
+    EXIT WHEN no_father_cursor%NOTFOUND;--Exits the loop when there are no more rows to fetch.
+    DBMS_OUTPUT.PUT_LINE('ID: ' || v_id || ', Name: ' || v_name);-- Outputs the ID and Name to the console.
   END LOOP;
-  CLOSE no_father_cursor;
+  CLOSE no_father_cursor;--Closes the cursor after all rows have been processed.
 END GetPersonsNoFather;
 /
 
@@ -240,10 +241,18 @@ WHERE MONTHS_BETWEEN(SYSDATE, dob) / 12 BETWEEN 20 AND 50;
         15 Fariha Haque                                                                                                                                                                                                                                                    05-OCT-85 Female    
         16 Rakib Hassan  
 --5)company count
-SELECT c.name AS company_name, COUNT(i.person_id) AS investor_count
-FROM company c
-LEFT JOIN investment i ON c.id = i.company_id
-GROUP BY c.name;
+        -- Select the company name and the count of investors for each company
+        SELECT c.name AS company_name, COUNT(i.person_id) AS investor_count
+        
+        -- From the 'company' table alias 'c'
+        FROM company c
+        
+        -- Perform a LEFT JOIN with the 'investment' table alias 'i' based on the 'id' and 'company_id' columns
+        LEFT JOIN investment i ON c.id = i.company_id
+        
+        -- Group the results by the company name
+        GROUP BY c.name;
+
 --output:
 Oracle	1
 Microsoft	4
