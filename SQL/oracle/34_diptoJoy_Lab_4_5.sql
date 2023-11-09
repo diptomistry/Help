@@ -255,6 +255,6 @@ WHERE MONTHS_BETWEEN(SYSDATE, dob) / 12 BETWEEN 20 AND 50;
 
 --output:
 Oracle	1
-Microsoft	4
+Microsoft 4
 Google	5
 
