@@ -122,7 +122,7 @@ INSERT INTO investment (company_id, company_name, person_id, comShare)
 VALUES (10, 'Oracle', 9, 28.90);
 
 
-                                              --QUERIES--
+                                              --QUERIES(B)--
 --1)Find the number of investors of the companies.
 CREATE OR REPLACE PROCEDURE GetCompanyInvestorCount AS--CREATE: If the stored procedure does not exist
                                                       --OR REPLACE: If the stored procedure already exists
@@ -168,7 +168,7 @@ END;
 EXEC CalculateFamilyInvestment(1);
 --output:
 Total investment by the family: 102
-                              --5 more queries--
+                              --5 more queries(A)--
     --1)person with no father
 CREATE OR REPLACE PROCEDURE GetPersonsNoFather AS
   CURSOR no_father_cursor IS-- Declare a cursor named no_father_cursor
