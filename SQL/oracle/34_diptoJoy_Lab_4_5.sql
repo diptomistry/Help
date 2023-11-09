@@ -122,7 +122,95 @@ INSERT INTO investment (company_id, company_name, person_id, comShare)
 VALUES (10, 'Oracle', 9, 28.90);
 
 
-                                              --QUERIES(B)--
+ 
+                              --5  queries(A)--
+    --1)person with no father
+CREATE OR REPLACE PROCEDURE GetPersonsNoFather AS
+  CURSOR no_father_cursor IS-- Declare a cursor named no_father_cursor
+    SELECT id, name
+    FROM person
+    WHERE father_id IS NULL;
+  
+  v_id NUMBER;--to store data retrieved from the cursor.
+  v_name VARCHAR2(255);
+BEGIN--start
+  OPEN no_father_cursor;-- Opens the cursor for fetching.
+  LOOP--Initiates a loop to iterate over the result set obtained from the cursor.
+    FETCH no_father_cursor INTO v_id, v_name;--Fetches data from the cursor into the declared variables.
+    EXIT WHEN no_father_cursor%NOTFOUND;--Exits the loop when there are no more rows to fetch.
+    DBMS_OUTPUT.PUT_LINE('ID: ' || v_id || ', Name: ' || v_name);-- Outputs the ID and Name to the console.
+  END LOOP;
+  CLOSE no_father_cursor;--Closes the cursor after all rows have been processed.
+END GetPersonsNoFather;
+/
+
+EXEC  GetPersonsNoFather
+--output:
+ID: 1, Name: Mohammad Rahman
+ID: 7, Name: Rahim Hasan
+ID: 15, Name: Fariha Haque
+--2)person with no father or mother:
+SELECT p.id, p.name
+FROM person p
+LEFT JOIN person father ON p.father_id = father.id
+LEFT JOIN person mother ON p.mother_id = mother.id
+WHERE father.id IS NULL OR mother.id IS NULL;
+--output:
+1	Mohammad Rahman
+7	Rahim Hasan
+15	Fariha Haque
+16	Rakib Hassan
+--3)person with no father and mother:
+SELECT p.id, p.name
+FROM person p
+LEFT JOIN person father ON p.father_id = father.id
+LEFT JOIN person mother ON p.mother_id = mother.id
+WHERE father.id IS NULL AND mother.id IS NULL;
+--output:
+1	Mohammad Rahman
+7	Rahim Hasan 
+--4)person with age BETWEEN 20 AND 50:
+SELECT id, name, dob, gender
+FROM person
+WHERE MONTHS_BETWEEN(SYSDATE, dob) / 12 BETWEEN 20 AND 50;
+--output:
+1	Mohammad Rahman	10-MAR-85	Male
+2	Fatima Ahmed	25-JUN-90	Female
+3	Abdul Khan	05-DEC-80	Male
+4	Ayesha Rahman	15-SEP-95	Female
+5	Arif Khan	20-AUG-92	Male
+6	Nadia Ahmed	12-APR-98	Female
+7	Rahim Hasan	30-NOV-87	Male
+8	Sabina Khan	18-FEB-94	Female
+9	Imran Ahmed	08-JUN-83	Male
+10	Farida Rahman	22-SEP-96	Female
+11	Samiul Islam	15-DEC-89	Male
+12	Nazia Khan	28-MAR-91	Female
+13	Ashraf Ahmed	10-MAY-80	Male
+14	Sultana Rahman	05-OCT-85	Female
+15	Fariha Haque	05-OCT-85	Female
+16	Rakib Hassan	05-OCT-95	Female
+--5)company count
+        -- Select the company name and the count of investors for each company
+        SELECT c.name AS company_name, COUNT(i.person_id) AS investor_count
+        
+        -- From the 'company' table alias 'c'
+        FROM company c
+        
+        -- Perform a LEFT JOIN with the 'investment' table alias 'i' based on the 'id' and 'company_id' columns
+        LEFT JOIN investment i ON c.id = i.company_id
+        
+        -- Group the results by the company name
+        GROUP BY c.name;
+
+--output:
+Oracle	1
+Microsoft 4
+Google	5
+
+
+
+                                             --QUERIES(B)--
 --1)Find the number of investors of the companies.
 CREATE OR REPLACE PROCEDURE GetCompanyInvestorCount AS--CREATE: If the stored procedure does not exist
                                                       --OR REPLACE: If the stored procedure already exists
@@ -168,93 +256,4 @@ END;
 EXEC CalculateFamilyInvestment(1);
 --output:
 Total investment by the family: 102
-                              --5 more queries(A)--
-    --1)person with no father
-CREATE OR REPLACE PROCEDURE GetPersonsNoFather AS
-  CURSOR no_father_cursor IS-- Declare a cursor named no_father_cursor
-    SELECT id, name
-    FROM person
-    WHERE father_id IS NULL;
-  
-  v_id NUMBER;--to store data retrieved from the cursor.
-  v_name VARCHAR2(255);
-BEGIN--start
-  OPEN no_father_cursor;-- Opens the cursor for fetching.
-  LOOP--Initiates a loop to iterate over the result set obtained from the cursor.
-    FETCH no_father_cursor INTO v_id, v_name;--Fetches data from the cursor into the declared variables.
-    EXIT WHEN no_father_cursor%NOTFOUND;--Exits the loop when there are no more rows to fetch.
-    DBMS_OUTPUT.PUT_LINE('ID: ' || v_id || ', Name: ' || v_name);-- Outputs the ID and Name to the console.
-  END LOOP;
-  CLOSE no_father_cursor;--Closes the cursor after all rows have been processed.
-END GetPersonsNoFather;
-/
-
-EXEC  GetPersonsNoFather
---output:
-ID: 1, Name: Mohammad Rahman
-ID: 7, Name: Rahim Hasan
-ID: 15, Name: Fariha Haque
---2)person with no father or mother:
-SELECT p.id, p.name
-FROM person p
-LEFT JOIN person father ON p.father_id = father.id
-LEFT JOIN person mother ON p.mother_id = mother.id
-WHERE father.id IS NULL OR mother.id IS NULL;
-
-        ID NAME                                                                                                                                                                                                                                                           
----------- ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-         1 Mohammad Rahman                                                                                                                                                                                                                                                
-         7 Rahim Hasan                                                                                                                                                                                                                                                    
-        15 Fariha Haque                                                                                                                                                                                                                                                   
-        16 Rakib Hassan  
---3)person with no father and mother:
-SELECT p.id, p.name
-FROM person p
-LEFT JOIN person father ON p.father_id = father.id
-LEFT JOIN person mother ON p.mother_id = mother.id
-WHERE father.id IS NULL AND mother.id IS NULL;
-        ID NAME                                                                                                                                                                                                                                                           
----------- ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-         1 Mohammad Rahman                                                                                                                                                                                                                                                
-         7 Rahim Hasan    
---4)person with age BETWEEN 20 AND 50:
-SELECT id, name, dob, gender
-FROM person
-WHERE MONTHS_BETWEEN(SYSDATE, dob) / 12 BETWEEN 20 AND 50;
-
-        ID NAME                                                                                                                                                                                                                                                            DOB       GENDER    
----------- --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- --------- ----------
-         1 Mohammad Rahman                                                                                                                                                                                                                                                 10-MAR-85 Male      
-         2 Fatima Ahmed                                                                                                                                                                                                                                                    25-JUN-90 Female    
-         3 Abdul Khan                                                                                                                                                                                                                                                      05-DEC-80 Male      
-         4 Ayesha Rahman                                                                                                                                                                                                                                                   15-SEP-95 Female    
-         5 Arif Khan                                                                                                                                                                                                                                                       20-AUG-92 Male      
-         6 Nadia Ahmed                                                                                                                                                                                                                                                     12-APR-98 Female    
-         7 Rahim Hasan                                                                                                                                                                                                                                                     30-NOV-87 Male      
-         8 Sabina Khan                                                                                                                                                                                                                                                     18-FEB-94 Female    
-         9 Imran Ahmed                                                                                                                                                                                                                                                     08-JUN-83 Male      
-        10 Farida Rahman                                                                                                                                                                                                                                                   22-SEP-96 Female    
-        11 Samiul Islam                                                                                                                                                                                                                                                    15-DEC-89 Male                                                                                                                                                                                                                                                               DOB       GENDER    
-        12 Nazia Khan                                                                                                                                                                                                                                                      28-MAR-91 Female    
-        13 Ashraf Ahmed                                                                                                                                                                                                                                                    10-MAY-80 Male      
-        14 Sultana Rahman                                                                                                                                                                                                                                                  05-OCT-85 Female    
-        15 Fariha Haque                                                                                                                                                                                                                                                    05-OCT-85 Female    
-        16 Rakib Hassan  
---5)company count
-        -- Select the company name and the count of investors for each company
-        SELECT c.name AS company_name, COUNT(i.person_id) AS investor_count
-        
-        -- From the 'company' table alias 'c'
-        FROM company c
-        
-        -- Perform a LEFT JOIN with the 'investment' table alias 'i' based on the 'id' and 'company_id' columns
-        LEFT JOIN investment i ON c.id = i.company_id
-        
-        -- Group the results by the company name
-        GROUP BY c.name;
-
---output:
-Oracle	1
-Microsoft 4
-Google	5
 
