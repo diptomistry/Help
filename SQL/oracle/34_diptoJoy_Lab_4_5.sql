@@ -167,5 +167,75 @@ END;
 EXEC CalculateFamilyInvestment(1);
 --output:
 Total investment by the family: 102
+                              --5 more queries--
+    --1)person with no father
+CREATE OR REPLACE PROCEDURE GetPersonsNoFather AS
+  CURSOR no_father_cursor IS
+    SELECT id, name
+    FROM person
+    WHERE father_id IS NULL;
+  
+  v_id NUMBER;
+  v_name VARCHAR2(255);
+BEGIN
+  OPEN no_father_cursor;
+  LOOP
+    FETCH no_father_cursor INTO v_id, v_name;
+    EXIT WHEN no_father_cursor%NOTFOUND;
+    DBMS_OUTPUT.PUT_LINE('ID: ' || v_id || ', Name: ' || v_name);
+  END LOOP;
+  CLOSE no_father_cursor;
+END GetPersonsNoFather;
+/
 
+EXEC  GetPersonsNoFather
+--output:
+ID: 1, Name: Mohammad Rahman
+ID: 7, Name: Rahim Hasan
+ID: 15, Name: Fariha Haque
+--2)person with no father or mother:
+SELECT p.id, p.name
+FROM person p
+LEFT JOIN person father ON p.father_id = father.id
+LEFT JOIN person mother ON p.mother_id = mother.id
+WHERE father.id IS NULL OR mother.id IS NULL;
 
+        ID NAME                                                                                                                                                                                                                                                           
+---------- ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+         1 Mohammad Rahman                                                                                                                                                                                                                                                
+         7 Rahim Hasan                                                                                                                                                                                                                                                    
+        15 Fariha Haque                                                                                                                                                                                                                                                   
+        16 Rakib Hassan  
+--3)person with no father and mother:
+SELECT p.id, p.name
+FROM person p
+LEFT JOIN person father ON p.father_id = father.id
+LEFT JOIN person mother ON p.mother_id = mother.id
+WHERE father.id IS NULL AND mother.id IS NULL;
+        ID NAME                                                                                                                                                                                                                                                           
+---------- ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+         1 Mohammad Rahman                                                                                                                                                                                                                                                
+         7 Rahim Hasan    
+--4)person with age BETWEEN 20 AND 50:
+SELECT id, name, dob, gender
+FROM person
+WHERE MONTHS_BETWEEN(SYSDATE, dob) / 12 BETWEEN 20 AND 50;
+
+        ID NAME                                                                                                                                                                                                                                                            DOB       GENDER    
+---------- --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- --------- ----------
+         1 Mohammad Rahman                                                                                                                                                                                                                                                 10-MAR-85 Male      
+         2 Fatima Ahmed                                                                                                                                                                                                                                                    25-JUN-90 Female    
+         3 Abdul Khan                                                                                                                                                                                                                                                      05-DEC-80 Male      
+         4 Ayesha Rahman                                                                                                                                                                                                                                                   15-SEP-95 Female    
+         5 Arif Khan                                                                                                                                                                                                                                                       20-AUG-92 Male      
+         6 Nadia Ahmed                                                                                                                                                                                                                                                     12-APR-98 Female    
+         7 Rahim Hasan                                                                                                                                                                                                                                                     30-NOV-87 Male      
+         8 Sabina Khan                                                                                                                                                                                                                                                     18-FEB-94 Female    
+         9 Imran Ahmed                                                                                                                                                                                                                                                     08-JUN-83 Male      
+        10 Farida Rahman                                                                                                                                                                                                                                                   22-SEP-96 Female    
+        11 Samiul Islam                                                                                                                                                                                                                                                    15-DEC-89 Male                                                                                                                                                                                                                                                               DOB       GENDER    
+        12 Nazia Khan                                                                                                                                                                                                                                                      28-MAR-91 Female    
+        13 Ashraf Ahmed                                                                                                                                                                                                                                                    10-MAY-80 Male      
+        14 Sultana Rahman                                                                                                                                                                                                                                                  05-OCT-85 Female    
+        15 Fariha Haque                                                                                                                                                                                                                                                    05-OCT-85 Female    
+        16 Rakib Hassan  
