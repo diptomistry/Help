@@ -67,3 +67,9 @@ VALUES (14, 'Sultana Rahman', TO_DATE('1985-10-05', 'YYYY-MM-DD'), 'Female', 13,
 
 -- Commit the changes
 COMMIT;
+
+CREATE TABLE company (
+    name VARCHAR2(255) PRIMARY KEY,
+    capital DECIMAL(18, 2)
+);
+
