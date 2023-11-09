@@ -73,3 +73,24 @@ CREATE TABLE company (
     capital DECIMAL(18, 2)
 );
 
+-- Inserting Bangladeshi company data into the company table
+-- Replace the values with actual data
+
+INSERT INTO company (name, capital) VALUES ('ABC Ltd.', 500000.00);
+INSERT INTO company (name, capital) VALUES ('XYZ Group', 750000.50);
+INSERT INTO company (name, capital) VALUES ('Tech Solutions Ltd.', 300000.75);
+INSERT INTO company (name, capital) VALUES ('Fashion World', 1000000.25);
+INSERT INTO company (name, capital) VALUES ('Green Agro Ltd.', 800000.00);
+INSERT INTO company (name, capital) VALUES ('City Bank', 2000000.50);
+INSERT INTO company (name, capital) VALUES ('Health Care Pharma', 450000.00);
+INSERT INTO company (name, capital) VALUES ('Travel Express', 600000.75);
+INSERT INTO company (name, capital) VALUES ('Energy Power Ltd.', 1200000.25);
+INSERT INTO company (name, capital) VALUES ('Educate Plus', 350000.00);
+CREATE TABLE investment (
+    id NUMBER PRIMARY KEY,
+    company_name VARCHAR2(255),
+    person_id NUMBER,
+    comShare DECIMAL(10, 2),
+    FOREIGN KEY (company_name) REFERENCES company(name),
+    FOREIGN KEY (person_id) REFERENCES person(id)
+);
