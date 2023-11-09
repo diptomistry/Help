@@ -239,3 +239,13 @@ WHERE MONTHS_BETWEEN(SYSDATE, dob) / 12 BETWEEN 20 AND 50;
         14 Sultana Rahman                                                                                                                                                                                                                                                  05-OCT-85 Female    
         15 Fariha Haque                                                                                                                                                                                                                                                    05-OCT-85 Female    
         16 Rakib Hassan  
+--5)company count
+SELECT c.name AS company_name, COUNT(i.person_id) AS investor_count
+FROM company c
+LEFT JOIN investment i ON c.id = i.company_id
+GROUP BY c.name;
+--output:
+Oracle	1
+Microsoft	4
+Google	5
+
