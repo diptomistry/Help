@@ -123,4 +123,49 @@ VALUES (10, 'Oracle', 9, 28.90);
 
 
                                               --QUERIES--
+--1)Find the number of investors of the companies.
+CREATE OR REPLACE PROCEDURE GetCompanyInvestorCount AS
+BEGIN
+    FOR company_rec IN (SELECT c.name AS company_name, COUNT(i.person_id) AS investor_count
+                        FROM company c
+                        LEFT JOIN investment i ON c.id = i.company_id
+                        GROUP BY c.name)
+    LOOP
+        DBMS_OUTPUT.PUT_LINE('Company: ' || company_rec.company_name || ', Investor Count: ' || company_rec.investor_count);
+    END LOOP;
+END;
+/
+EXEC getcompanyinvestorcount;
+--output:
+
+Company: Oracle, Investor Count: 1
+Company: Microsoft, Investor Count: 4
+Company: Google, Investor Count: 5
+
+
+--2)Find the total amount invested by a family
+CREATE OR REPLACE PROCEDURE CalculateFamilyInvestment (
+    in_person_id IN NUMBER
+) AS
+    v_total_investment NUMBER;
+BEGIN
+    SELECT NVL(SUM(i.comShare), 0)
+    INTO v_total_investment
+    FROM investment i
+    JOIN person p ON i.person_id = p.id
+    WHERE i.person_id = in_person_id
+       OR i.person_id IN (
+           SELECT id
+           FROM person
+           WHERE father_id = in_person_id OR mother_id = in_person_id
+       );
+
+    DBMS_OUTPUT.PUT_LINE('Total investment by the family: ' || v_total_investment);
+END;
+/
+
+EXEC CalculateFamilyInvestment(1);
+--output:
+Total investment by the family: 102
+
 
