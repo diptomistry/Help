@@ -1,2 +1,2 @@
-sudo npx create-react-app dbms_projec
+sudo npx create-react-app front
 sudo npx express-generator back
