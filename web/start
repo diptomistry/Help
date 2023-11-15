@@ -1,4 +1,5 @@
 sudo npx create-react-app front
+yarn create react-app unicom_front
 sudo npx express-generator back
 
 to delete:sudo rm -rf /Users/dipto/Desktop/front
