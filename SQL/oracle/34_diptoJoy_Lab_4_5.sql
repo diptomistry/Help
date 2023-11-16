@@ -143,7 +143,7 @@ BEGIN--start
   CLOSE no_father_cursor;--Closes the cursor after all rows have been processed.
 END GetPersonsNoFather;
 /
-
+SET SERVEROUTPUT ON;-- to enable the DBMS output display
 EXEC  GetPersonsNoFather
 --output:
 ID: 1, Name: Mohammad Rahman
