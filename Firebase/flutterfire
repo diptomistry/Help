@@ -1,0 +1,3 @@
+nano ~/.zshrc
+export PATH="$PATH":"$HOME/.pub-cache/bin"
+Save the File: Press Ctrl + X, then Y to confirm changes, and press Enter to keep the same file name.
