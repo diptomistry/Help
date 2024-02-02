@@ -4,6 +4,8 @@ node app.js
 
 npm install mysql
 to hide info:create .env in node_modules
+create .gitignore on node_modules ->.env 
+node_modules
  sudo npm install dotenv
 to avoid re run:sudo npm install --save-dev nodemon
 on package.json:scripts->"start": "nodemon app.js"
