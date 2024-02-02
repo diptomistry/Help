@@ -1,0 +1,7 @@
+to give write permission:on Desktop(if the directory is in desktop)sudo chown -R dipto project_name
+to create nodejs project:sudo npx express-generator mock
+node app.js                    
+
+npm install mysql
+to hide info:create .env in node_modules
+ sudo npm install dotenv
