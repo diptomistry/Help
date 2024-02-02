@@ -10,3 +10,5 @@ node_modules
 to avoid re run:sudo npm install --save-dev nodemon
 on package.json:scripts->"start": "nodemon app.js"
 now npm start
+to saltsync and hashsync password:sudo npm install
+ bcrypt
