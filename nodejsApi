@@ -12,3 +12,6 @@ on package.json:scripts->"start": "nodemon app.js"
 now npm start
 to saltsync and hashsync password:sudo npm install
  bcrypt
+
+sudo npm i jsonw
+ebtoken
