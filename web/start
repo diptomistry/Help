@@ -7,5 +7,6 @@ to give permission:sudo chown -R dipto /Users/dipto/Desktop/project_front
 sudo chown -R dipto project_back
 
 //nodemon:to avoid npm start repeatedly
+change port number:www
 
 
