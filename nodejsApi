@@ -13,5 +13,5 @@ now npm start
 to saltsync and hashsync password:sudo npm install
  bcrypt
 
-sudo npm i jsonw
-ebtoken
+sudo npm i jsonwebtoken
+sudo npm install --save cors //to allow the client to access the server
