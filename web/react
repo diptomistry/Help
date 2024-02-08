@@ -2,3 +2,4 @@ sudo npx create-react-app front
 yarn create react-app unicom_front
 sudo npm i bootstrap react-router-dom
 frce:react functional component
+sudo npm i axios:to call api
