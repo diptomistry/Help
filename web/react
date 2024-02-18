@@ -3,3 +3,4 @@ yarn create react-app unicom_front
 sudo npm i bootstrap react-router-dom
 rfce:react functional component
 sudo npm i axios:to call api
+sudo npm i react-slideshow-image
